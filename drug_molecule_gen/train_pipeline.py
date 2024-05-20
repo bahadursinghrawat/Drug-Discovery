@@ -45,7 +45,7 @@ def run_training():
 
 
     drug_discovery_model = pl.encoder_decoder_with_attn_mech()
-    history = drug_discovery_model.fit(training_data_generator(1000,1),epochs=25,steps_per_epochs=1000,
+    history = drug_discovery_model.fit(training_data_generator(1000,1),epochs=1,
                              validation_data=cv_data_generator(1711,1),validation_steps=18)
     
     save_model(drug_discovery_model)
