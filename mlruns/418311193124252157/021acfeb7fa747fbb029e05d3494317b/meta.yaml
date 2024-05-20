@@ -1,0 +1,15 @@
+artifact_uri: file:///home/bahadur/internship/drug_disc_project/mlruns/418311193124252157/021acfeb7fa747fbb029e05d3494317b/artifacts
+end_time: 1715965225838
+entry_point_name: ''
+experiment_id: '418311193124252157'
+lifecycle_stage: active
+run_id: 021acfeb7fa747fbb029e05d3494317b
+run_name: enc_dec_drug_molecule_gen
+run_uuid: 021acfeb7fa747fbb029e05d3494317b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1715965199105
+status: 3
+tags: []
+user_id: bahadur
