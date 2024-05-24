@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mysql:
+    build:
+      context: ./ubuntu18.04_mysql_server
+      dockerfile: Dockerfile
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_mlflow
+      MYSQL_USER: mlflow_user
+      MYSQL_PASSWORD: mlflow
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    
+    # volumes:
+    #   - mysql_data:/var/lib/mysql
+
+  mlflow:
+    # build:
+
+    #   context: ./mlflow_server
+    #   dockerfile: Dockerfile
+    image: mlflow:latest
+    container_name: mlflow
+    
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    # command: mlflow server --backend-store-uri $BACKEND_STORE_URI --default-artifact-root $ARTIFACT_STORE_URI --host 0.0.0.0
+
+volumes:
+  mysql_data:
