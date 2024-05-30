@@ -15,6 +15,7 @@ GRANT ALL ON db_mlflow.* TO 'mlflow_user'@'localhost';
 FLUSH PRIVILEGES;
 CREATE DATABASE IF NOT EXISTS db_mlflow;
 SHOW DATABASES;
+exit
 EOF
 
 tail -f /var/log/mysql/error.log
