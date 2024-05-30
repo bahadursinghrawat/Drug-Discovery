@@ -3,35 +3,35 @@ version: '3.8'
 services:
   mysql:
     build:
-      context: ./ubuntu18.04_mysql_server
+      context: ./app_dockerfiles/ubuntu18.04_mysql_server
       dockerfile: Dockerfile
-    container_name: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: db_mlflow
-      MYSQL_USER: mlflow_user
-      MYSQL_PASSWORD: mlflow
+    container_name: mysql_container
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
-    
-    # volumes:
-    #   - mysql_data:/var/lib/mysql
+      - ./app_data/mysql_db:/var/lib/mysql/db_mlflow
+    restart: always
 
   mlflow:
-    # build:
-
-    #   context: ./mlflow_server
-    #   dockerfile: Dockerfile
-    image: mlflow:latest
-    container_name: mlflow
-    
+    build:
+      context: ./app_dockerfiles/ubuntu22.04_mlflow_server
+      dockerfile: Dockerfile
+    container_name: mlflow_container
     ports:
       - "5000:5000"
+    expose: 
+      - "5000"
     depends_on:
       - mysql
-    # command: mlflow server --backend-store-uri $BACKEND_STORE_URI --default-artifact-root $ARTIFACT_STORE_URI --host 0.0.0.0
+    volumes:
+      - ./app_data/mlflow_tracked_data/mlruns:/mlruns
 
-volumes:
-  mysql_data:
+  model:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: drug_discovery
+    volumes:
+      - ./app_data/mlflow_tracked_data/mlruns:/app/drug_molecule_gen/mlruns
+    depends_on:
+      - mlflow
